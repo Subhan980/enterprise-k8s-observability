@@ -41,28 +41,37 @@ This project delivers a complete monitoring stack that helps platform and DevOps
 ✅ Production-grade and easily extensible  
 
 ---
-
 ## 🏗️ Architecture
 
-+-------------------------------+
++-------------------------------------------+
 
 Kubernetes Cluster
-Pods
-+-------------------------------+
+Pods • Metrics • Logs
++-------------------------------------------+
 
-+-------------------------------+
+markdown
+Copy code
+                │
+                ▼
++-------------------------------------------+
 | Prometheus + Alertmanager |
-+-------------------------------+
-
-+-------------------------------+
+| (Metrics collection & alerting) |
++-------------------------------------------+
+│
+▼
++-------------------------------------------+
 | Grafana + Loki Integration |
-+-------------------------------+
-
-+-------------------------------+
+| (Visualization & log aggregation) |
++-------------------------------------------+
+│
+▼
++-------------------------------------------+
 | Dashboards + Notifications |
-+-------------------------------+
+| (Slack / Teams / Email integrations) |
++-------------------------------------------+
 
----
+Copy code
+
 
 ## 🚀 Quick Start
 
