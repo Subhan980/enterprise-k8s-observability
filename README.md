@@ -1,228 +1,168 @@
-# Deploy a Production Ready Kubernetes Cluster
+# 🚀 kubespray-observability
 
-![Kubernetes Logo](https://raw.githubusercontent.com/kubernetes-sigs/kubespray/master/docs/img/kubernetes-logo.png)
+A **production-ready observability and monitoring stack** for Kubernetes clusters — combining **Prometheus**, **Grafana**, **Loki**, and **Alertmanager**, all deployed with **Helm**.  
+It enables unified metrics, logs, and alerting visibility across workloads running in enterprise Kubernetes environments.
 
-If you have questions, check the documentation at [kubespray.io](https://kubespray.io) and join us on the [kubernetes slack](https://kubernetes.slack.com), channel **\#kubespray**.
-You can get your invite [here](http://slack.k8s.io/)
+---
 
-- Can be deployed on **[AWS](docs/cloud_providers/aws.md), GCE, [Azure](docs/cloud_providers/azure.md), [OpenStack](docs/cloud_controllers/openstack.md), [vSphere](docs/cloud_controllers/vsphere.md), [Equinix Metal](docs/cloud_providers/equinix-metal.md) (bare metal), Oracle Cloud Infrastructure (Experimental), or Baremetal**
-- **Highly available** cluster
-- **Composable** (Choice of the network plugin for instance)
-- Supports most popular **Linux distributions**
-- **Continuous integration tests**
+## 🌐 Overview
 
-## Quick Start
+Modern Kubernetes environments demand centralized, scalable observability.  
+This project delivers a complete monitoring stack that helps platform and DevOps teams:
 
-Below are several ways to use Kubespray to deploy a Kubernetes cluster.
+- Gain real-time insight into cluster and application health  
+- Collect metrics, logs, and alerts in one place  
+- Integrate alert notifications to Slack or Microsoft Teams  
+- Visualize infrastructure and workloads using Grafana dashboards  
 
-### Docker
+---
 
-Ensure you have installed Docker then
+## 🧩 Tech Stack
 
-```ShellSession
-docker run --rm -it --mount type=bind,source="$(pwd)"/inventory/sample,dst=/inventory \
-  --mount type=bind,source="${HOME}"/.ssh/id_rsa,dst=/root/.ssh/id_rsa \
-  quay.io/kubespray/kubespray:v2.29.0 bash
-# Inside the container you may now run the kubespray playbooks:
-ansible-playbook -i /inventory/inventory.ini --private-key /root/.ssh/id_rsa cluster.yml
-```
+| Tool | Purpose |
+|------|----------|
+| **Kubernetes** | Container orchestration platform |
+| **Prometheus** | Metrics collection and alerting |
+| **Grafana** | Visualization and dashboards |
+| **Loki** | Log aggregation |
+| **Helm** | Deployment and management |
+| **Alertmanager** | Notification routing (Slack, Teams, Email) |
 
-### Ansible
+---
 
-#### Usage
+## 🎯 Key Features
 
-See [Getting started](/docs/getting_started/getting-started.md)
+✅ Unified observability for Kubernetes clusters  
+✅ Preconfigured dashboards and alert rules  
+✅ Log aggregation via Loki, integrated in Grafana  
+✅ Slack / Teams alert notifications  
+✅ Sample workloads for quick testing  
+✅ Simple Helm-based deployment  
+✅ Production-grade and easily extensible  
 
-#### Collection
+---
 
-See [here](docs/ansible/ansible_collection.md) if you wish to use this repository as an Ansible collection
+## 🏗️ Architecture
 
-### Vagrant
++-------------------------------+
 
-For Vagrant we need to install Python dependencies for provisioning tasks.
-Check that ``Python`` and ``pip`` are installed:
+Kubernetes Cluster
+Pods
++-------------------------------+
+      ↓
 
-```ShellSession
-python -V && pip -V
-```
 
-If this returns the version of the software, you're good to go. If not, download and install Python from here <https://www.python.org/downloads/source/>
++-------------------------------+
+| Prometheus + Alertmanager |
++-------------------------------+
+↓
++-------------------------------+
+| Grafana + Loki Integration |
++-------------------------------+
+↓
++-------------------------------+
+| Dashboards + Notifications |
++-------------------------------+
 
-Install Ansible according to [Ansible installation guide](/docs/ansible/ansible.md#installing-ansible)
-then run the following step:
 
-```ShellSession
-vagrant up
-```
+---
 
-## Documents
+## 🚀 Quick Start
 
-- [Requirements](#requirements)
-- [Kubespray vs ...](docs/getting_started/comparisons.md)
-- [Getting started](docs/getting_started/getting-started.md)
-- [Setting up your first cluster](docs/getting_started/setting-up-your-first-cluster.md)
-- [Ansible inventory and tags](docs/ansible/ansible.md)
-- [Integration with existing ansible repo](docs/operations/integration.md)
-- [Deployment data variables](docs/ansible/vars.md)
-- [DNS stack](docs/advanced/dns-stack.md)
-- [HA mode](docs/operations/ha-mode.md)
-- [Network plugins](#network-plugins)
-- [Vagrant install](docs/developers/vagrant.md)
-- [Flatcar Container Linux bootstrap](docs/operating_systems/flatcar.md)
-- [Fedora CoreOS bootstrap](docs/operating_systems/fcos.md)
-- [openSUSE setup](docs/operating_systems/opensuse.md)
-- [Downloaded artifacts](docs/advanced/downloads.md)
-- [Equinix Metal](docs/cloud_providers/equinix-metal.md)
-- [OpenStack](docs/cloud_controllers/openstack.md)
-- [vSphere](docs/cloud_controllers/vsphere.md)
-- [Large deployments](docs/operations/large-deployments.md)
-- [Adding/replacing a node](docs/operations/nodes.md)
-- [Upgrades basics](docs/operations/upgrades.md)
-- [Air-Gap installation](docs/operations/offline-environment.md)
-- [NTP](docs/advanced/ntp.md)
-- [Hardening](docs/operations/hardening.md)
-- [Mirror](docs/operations/mirror.md)
-- [Roadmap](docs/roadmap/roadmap.md)
+### 1️⃣ Prerequisites
 
-## Supported Linux Distributions
+- A running Kubernetes cluster  
+- Helm installed (`helm version`)  
+- `kubectl` configured to access your cluster  
 
-- **Flatcar Container Linux by Kinvolk**
-- **Debian** Bookworm, Bullseye, Trixie
-- **Ubuntu** 22.04, 24.04
-- **CentOS/RHEL** [8, 9](docs/operating_systems/rhel.md#rhel-8)
-- **Fedora** 39, 40
-- **Fedora CoreOS** (see [fcos Note](docs/operating_systems/fcos.md))
-- **openSUSE** Leap 15.x/Tumbleweed
-- **Oracle Linux** [8, 9](docs/operating_systems/rhel.md#rhel-8)
-- **Alma Linux** [8, 9](docs/operating_systems/rhel.md#rhel-8)
-- **Rocky Linux** [8, 9](docs/operating_systems/rhel.md#rhel-8)
-- **Kylin Linux Advanced Server V10** (experimental: see [kylin linux notes](docs/operating_systems/kylinlinux.md))
-- **Amazon Linux 2** (experimental: see [amazon linux notes](docs/operating_systems/amazonlinux.md))
-- **UOS Linux** (experimental: see [uos linux notes](docs/operating_systems/uoslinux.md))
-- **openEuler** (experimental: see [openEuler notes](docs/operating_systems/openeuler.md))
+---
 
-Note:
+### 2️⃣ Deploy Prometheus Stack
 
-- Upstart/SysV init based OS types are not supported.
-- [Kernel requirements](docs/operations/kernel-requirements.md) (please read if the OS kernel version is < 4.19).
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm install kube-observe prometheus-community/kube-prometheus-stack \
+  -n monitoring --create-namespace
 
-## Supported Components
+3️⃣ Deploy Loki and Grafana
+helm repo add grafana https://grafana.github.io/helm-charts
+helm install loki grafana/loki-stack -n monitoring
 
-<!-- BEGIN ANSIBLE MANAGED BLOCK -->
+4️⃣ Configure Alertmanager (Slack / Teams)
 
-- Core
-  - [kubernetes](https://github.com/kubernetes/kubernetes) 1.34.1
-  - [etcd](https://github.com/etcd-io/etcd) 3.5.23
-  - [docker](https://www.docker.com/) 28.3
-  - [containerd](https://containerd.io/) 2.1.4
-  - [cri-o](http://cri-o.io/) 1.34.1 (experimental: see [CRI-O Note](docs/CRI/cri-o.md). Only on fedora, ubuntu and centos based OS)
-- Network Plugin
-  - [cni-plugins](https://github.com/containernetworking/plugins) 1.8.0
-  - [calico](https://github.com/projectcalico/calico) 3.30.3
-  - [cilium](https://github.com/cilium/cilium) 1.18.2
-  - [flannel](https://github.com/flannel-io/flannel) 0.27.3
-  - [kube-ovn](https://github.com/alauda/kube-ovn) 1.12.21
-  - [kube-router](https://github.com/cloudnativelabs/kube-router) 2.1.1
-  - [multus](https://github.com/k8snetworkplumbingwg/multus-cni) 4.2.2
-  - [kube-vip](https://github.com/kube-vip/kube-vip) 0.8.0
-- Application
-  - [cert-manager](https://github.com/jetstack/cert-manager) 1.15.3
-  - [coredns](https://github.com/coredns/coredns) 1.12.1
-  - [ingress-nginx](https://github.com/kubernetes/ingress-nginx) 1.13.3
-  - [argocd](https://argoproj.github.io/) 2.14.5
-  - [helm](https://helm.sh/) 3.18.4
-  - [metallb](https://metallb.universe.tf/) 0.13.9
-  - [registry](https://github.com/distribution/distribution) 2.8.1
-- Storage Plugin
-  - [aws-ebs-csi-plugin](https://github.com/kubernetes-sigs/aws-ebs-csi-driver) 0.5.0
-  - [azure-csi-plugin](https://github.com/kubernetes-sigs/azuredisk-csi-driver) 1.10.0
-  - [cinder-csi-plugin](https://github.com/kubernetes/cloud-provider-openstack/blob/master/docs/cinder-csi-plugin/using-cinder-csi-plugin.md) 1.30.0
-  - [gcp-pd-csi-plugin](https://github.com/kubernetes-sigs/gcp-compute-persistent-disk-csi-driver) 1.9.2
-  - [local-path-provisioner](https://github.com/rancher/local-path-provisioner) 0.0.32
-  - [local-volume-provisioner](https://github.com/kubernetes-sigs/sig-storage-local-static-provisioner) 2.5.0
-  - [node-feature-discovery](https://github.com/kubernetes-sigs/node-feature-discovery) 0.16.4
+Example (edit alerts/alertmanager-config.yaml):
 
-<!-- END ANSIBLE MANAGED BLOCK -->
+receivers:
+  - name: 'slack'
+    slack_configs:
+      - channel: '#k8s-alerts'
+        send_resolved: true
+        api_url: '<YOUR_SLACK_WEBHOOK_URL>'
 
-## Container Runtime Notes
 
-- The cri-o version should be aligned with the respective kubernetes version (i.e. kube_version=1.20.x, crio_version=1.20)
+Apply it:
 
-## Requirements
+kubectl apply -f alerts/
 
-- **Minimum required version of Kubernetes is v1.30**
-- **Ansible v2.14+, Jinja 2.11+ and python-netaddr is installed on the machine that will run Ansible commands**
-- The target servers must have **access to the Internet** in order to pull docker images. Otherwise, additional configuration is required (See [Offline Environment](docs/operations/offline-environment.md))
-- The target servers are configured to allow **IPv4 forwarding**.
-- If using IPv6 for pods and services, the target servers are configured to allow **IPv6 forwarding**.
-- The **firewalls are not managed**, you'll need to implement your own rules the way you used to.
-    in order to avoid any issue during deployment you should disable your firewall.
-- If kubespray is run from non-root user account, correct privilege escalation method
-    should be configured in the target servers. Then the `ansible_become` flag
-    or command parameters `--become or -b` should be specified.
+5️⃣ Access Grafana
+kubectl port-forward svc/kube-observe-grafana -n monitoring 3000:80
 
-Hardware:
-These limits are safeguarded by Kubespray. Actual requirements for your workload can differ. For a sizing guide go to the [Building Large Clusters](https://kubernetes.io/docs/setup/cluster-large/#size-of-master-and-master-components) guide.
 
-- Control Plane
-  - Memory: 2 GB
-- Worker Node
-  - Memory: 1 GB
+Then open → http://localhost:3000
 
-## Network Plugins
+(Default user: admin, password: prom-operator)
 
-You can choose among ten network plugins. (default: `calico`, except Vagrant uses `flannel`)
+📊 Dashboards Included
 
-- [flannel](docs/CNI/flannel.md): gre/vxlan (layer 2) networking.
+Cluster Overview Dashboard
 
-- [Calico](https://docs.tigera.io/calico/latest/about/) is a networking and network policy provider. Calico supports a flexible set of networking options
-    designed to give you the most efficient networking across a range of situations, including non-overlay
-    and overlay networks, with or without BGP. Calico uses the same engine to enforce network policy for hosts,
-    pods, and (if using Istio and Envoy) applications at the service mesh layer.
+Node & Pod Resource Metrics
 
-- [cilium](http://docs.cilium.io/en/latest/): layer 3/4 networking (as well as layer 7 to protect and secure application protocols), supports dynamic insertion of BPF bytecode into the Linux kernel to implement security services, networking and visibility logic.
+Namespace Performance
 
-- [kube-ovn](docs/CNI/kube-ovn.md): Kube-OVN integrates the OVN-based Network Virtualization with Kubernetes. It offers an advanced Container Network Fabric for Enterprises.
+Kubernetes Control Plane Health
 
-- [kube-router](docs/CNI/kube-router.md): Kube-router is a L3 CNI for Kubernetes networking aiming to provide operational
-    simplicity and high performance: it uses IPVS to provide Kube Services Proxy (if setup to replace kube-proxy),
-    iptables for network policies, and BGP for ods L3 networking (with optionally BGP peering with out-of-cluster BGP peers).
-    It can also optionally advertise routes to Kubernetes cluster Pods CIDRs, ClusterIPs, ExternalIPs and LoadBalancerIPs.
+Loki Log Explorer
 
-- [macvlan](docs/CNI/macvlan.md): Macvlan is a Linux network driver. Pods have their own unique Mac and Ip address, connected directly the physical (layer 2) network.
+All dashboards are preloaded in Grafana under the “Kubernetes Observability” folder.
 
-- [multus](docs/CNI/multus.md): Multus is a meta CNI plugin that provides multiple network interface support to pods. For each interface Multus delegates CNI calls to secondary CNI plugins such as Calico, macvlan, etc.
+📦 Repository Structure
+📁 kubespray-observability/
+ ├── helm/                # Helm values and custom chart configs
+ ├── dashboards/          # Grafana dashboard JSON files
+ ├── alerts/              # Alertmanager configuration files
+ ├── sample-workloads/    # Example workloads for testing
+ ├── docs/                # Documentation and setup guides
+ └── README.md
 
-- [custom_cni](roles/network-plugin/custom_cni/) : You can specify some manifests that will be applied to the clusters to bring you own CNI and use non-supported ones by Kubespray.
-  See `tests/files/custom_cni/README.md` and `tests/files/custom_cni/values.yaml`for an example with a CNI provided by a Helm Chart.
+🧠 Future Enhancements
 
-The network plugin to use is defined by the variable `kube_network_plugin`. There is also an
-option to leverage built-in cloud provider networking instead.
-See also [Network checker](docs/advanced/netcheck.md).
+🔍 Add Tempo for distributed tracing
 
-## Ingress Plugins
+📈 Integrate OpenTelemetry collector
 
-- [nginx](https://kubernetes.github.io/ingress-nginx): the NGINX Ingress Controller.
+🧩 Add Service Mesh observability (Istio / Linkerd)
 
-- [metallb](docs/ingress/metallb.md): the MetalLB bare-metal service LoadBalancer provider.
+💰 Include cost and capacity dashboards
 
-## Community docs and resources
+🔐 RBAC & SSO integration for Grafana
 
-- [kubernetes.io/docs/setup/production-environment/tools/kubespray/](https://kubernetes.io/docs/setup/production-environment/tools/kubespray/)
-- [kubespray, monitoring and logging](https://github.com/gregbkr/kubernetes-kargo-logging-monitoring) by @gregbkr
-- [Deploy Kubernetes w/ Ansible & Terraform](https://rsmitty.github.io/Terraform-Ansible-Kubernetes/) by @rsmitty
-- [Deploy a Kubernetes Cluster with Kubespray (video)](https://www.youtube.com/watch?v=CJ5G4GpqDy0)
+🤝 Contributing
 
-## Tools and projects on top of Kubespray
+Contributions are welcome!
+You can submit pull requests for:
 
-- [Digital Rebar Provision](https://github.com/digitalrebar/provision/blob/v4/doc/integrations/ansible.rst)
-- [Terraform Contrib](https://github.com/kubernetes-sigs/kubespray/tree/master/contrib/terraform)
-- [Kubean](https://github.com/kubean-io/kubean)
+New dashboards
 
-## CI Tests
+Improved alert rules
 
-[![Build graphs](https://gitlab.com/kargo-ci/kubernetes-sigs-kubespray/badges/master/pipeline.svg)](https://gitlab.com/kargo-ci/kubernetes-sigs-kubespray/-/pipelines)
+Additional integrations
 
-CI/end-to-end tests sponsored by: [CNCF](https://cncf.io), [Equinix Metal](https://metal.equinix.com/), [OVHcloud](https://www.ovhcloud.com/), [ELASTX](https://elastx.se/).
+Documentation improvements
 
-See the [test matrix](docs/developers/test_cases.md) for details.
+💡 Maintainer
+
+kubespray-observability
+Developed and maintained by Your Name
+
+For feedback or questions, please open an issue.
