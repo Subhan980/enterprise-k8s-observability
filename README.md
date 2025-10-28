@@ -43,34 +43,30 @@ This project delivers a complete monitoring stack that helps platform and DevOps
 ---
 ## 🏗️ Architecture
 
-+-------------------------------------------+
+         +-------------------------------------------+
+         |           Kubernetes Cluster              |
+         |-------------------------------------------|
+         | Pods  •  Metrics  •  Logs                 |
+         +-------------------------------------------+
+                          │
+                          ▼
+         +-------------------------------------------+
+         |       Prometheus  +  Alertmanager          |
+         | (Metrics collection & alerting)            |
+         +-------------------------------------------+
+                          │
+                          ▼
+         +-------------------------------------------+
+         |         Grafana  +  Loki Integration       |
+         |   (Visualization & log aggregation)        |
+         +-------------------------------------------+
+                          │
+                          ▼
+         +-------------------------------------------+
+         |      Dashboards  +  Notifications          |
+         | (Slack / Teams / Email integrations)       |
+         +-------------------------------------------+
 
-Kubernetes Cluster
-Pods • Metrics • Logs
-+-------------------------------------------+
-
-markdown
-Copy code
-                │
-                ▼
-+-------------------------------------------+
-| Prometheus + Alertmanager |
-| (Metrics collection & alerting) |
-+-------------------------------------------+
-│
-▼
-+-------------------------------------------+
-| Grafana + Loki Integration |
-| (Visualization & log aggregation) |
-+-------------------------------------------+
-│
-▼
-+-------------------------------------------+
-| Dashboards + Notifications |
-| (Slack / Teams / Email integrations) |
-+-------------------------------------------+
-
-Copy code
 
 
 ## 🚀 Quick Start
