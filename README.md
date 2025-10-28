@@ -49,21 +49,18 @@ This project delivers a complete monitoring stack that helps platform and DevOps
 Kubernetes Cluster
 Pods
 +-------------------------------+
-      ↓
-
 
 +-------------------------------+
 | Prometheus + Alertmanager |
 +-------------------------------+
-↓
+
 +-------------------------------+
 | Grafana + Loki Integration |
 +-------------------------------+
-↓
+
 +-------------------------------+
 | Dashboards + Notifications |
 +-------------------------------+
-
 
 ---
 
